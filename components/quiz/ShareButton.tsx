@@ -24,6 +24,19 @@ function slugify(value: string): string {
   )
 }
 
+/**
+ * iPadOS reports a Mac user agent, so touch capability is the tiebreaker.
+ * Desktop Macs report maxTouchPoints === 0.
+ */
+function isMobileDevice(): boolean {
+  if (typeof navigator === 'undefined') return false
+  const ua = navigator.userAgent
+  return (
+    /Android|iPhone|iPod/i.test(ua) ||
+    (/Macintosh|iPad/.test(ua) && navigator.maxTouchPoints > 1)
+  )
+}
+
 export default function ShareButton({
   getCanvas,
   name,
@@ -32,7 +45,8 @@ export default function ShareButton({
   level,
   onRetake,
 }: ShareButtonProps) {
-  const [busy, setBusy] = useState(false)
+  // Only ever true on mobile, where an image file is being prepared.
+  const [preparing, setPreparing] = useState(false)
 
   const shareUrl = `${siteUrl}/quiz/share?name=${encodeURIComponent(
     name.trim()
@@ -41,9 +55,8 @@ export default function ShareButton({
   const message = `🌳 I scored ${score}/${total} on the Forest Road Vault Knowledge Quiz and earned the "${level.name}" certificate!\n\nTest your knowledge about this real-world credit protocol on Ethereum L1.\n\n${siteMeta.handle} #ForestRoadVault #DeFi #RWA`
 
   /**
-   * X's tweet composer cannot attach an image from a URL, so the desktop path
-   * links to /quiz/share, whose OG image is the certificate — X renders that
-   * as the card. Mobile gets the real file via the Web Share API.
+   * Opens X's composer pointed at /quiz/share, whose Open Graph image is the
+   * generated certificate — that is what X renders as the card.
    */
   function shareViaIntent() {
     const intent = `https://x.com/intent/tweet?text=${encodeURIComponent(
@@ -52,14 +65,26 @@ export default function ShareButton({
     window.open(intent, '_blank', 'noopener,noreferrer')
   }
 
+  /**
+   * Desktop goes straight to X. The Web Share API is deliberately not used
+   * there: browsers on macOS and Windows report canShare({ files }) as true
+   * but hand off to the OS share sheet, which has no X entry — the click
+   * would appear to do nothing useful. On phones the X app is a share target
+   * and can receive the PNG itself, so mobile tries that first.
+   */
   async function handleShare() {
-    const canvas = getCanvas()
-    if (!canvas) {
+    if (!isMobileDevice()) {
       shareViaIntent()
       return
     }
 
-    setBusy(true)
+    const canvas = getCanvas()
+    if (!canvas || !navigator.canShare) {
+      shareViaIntent()
+      return
+    }
+
+    setPreparing(true)
     try {
       const blob = await new Promise<Blob | null>((resolve) =>
         canvas.toBlob((b) => resolve(b), 'image/png')
@@ -73,7 +98,7 @@ export default function ShareButton({
         type: 'image/png',
       })
 
-      if (navigator.canShare?.({ files: [file] })) {
+      if (navigator.canShare({ files: [file] })) {
         await navigator.share({
           title: 'Forest Road Vault Certificate',
           text: `${message}\n\n${shareUrl}`,
@@ -84,10 +109,10 @@ export default function ShareButton({
 
       shareViaIntent()
     } catch (error) {
-      // A user cancelling the share sheet is not a failure.
+      // Dismissing the share sheet is a deliberate choice, not a failure.
       if ((error as Error)?.name !== 'AbortError') shareViaIntent()
     } finally {
-      setBusy(false)
+      setPreparing(false)
     }
   }
 
@@ -105,7 +130,7 @@ export default function ShareButton({
       <Button
         type="button"
         onClick={handleShare}
-        disabled={busy}
+        disabled={preparing}
         variant="secondary"
       >
         <svg
@@ -116,7 +141,7 @@ export default function ShareButton({
         >
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
         </svg>
-        {busy ? 'Preparing…' : 'Share on X'}
+        {preparing ? 'Preparing…' : 'Share on X'}
       </Button>
 
       <Button type="button" onClick={handleDownload} variant="primary">
