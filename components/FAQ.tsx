@@ -33,7 +33,7 @@ const faqs = [
   {
     question: 'Is the audit public?',
     answer:
-      'Yes. Full audit report is on GitHub: github.com/Forest-Road-Company/forest-road-vault',
+      'Yes. Full audit report: github.com/Forest-Road-Company/forest-road-vault',
   },
 ]
 
@@ -42,28 +42,28 @@ export default function FAQ() {
   const reduceMotion = useReducedMotion()
 
   return (
-    <div className="mt-12">
-      <ul className="divide-y divide-navy/10 border-y border-navy/10 dark:divide-white/10 dark:border-white/10">
+    <div className="mt-16">
+      <ul className="border-t border-gold/30">
         {faqs.map((faq, index) => {
           const expanded = open === index
           return (
-            <li key={faq.question}>
+            <li key={faq.question} className="border-b border-gold/30">
               <h3>
                 <button
                   type="button"
                   onClick={() => setOpen(expanded ? null : index)}
                   aria-expanded={expanded}
                   aria-controls={`faq-panel-${index}`}
-                  className="flex w-full items-center justify-between gap-6 py-5 text-left"
+                  className="flex w-full items-center justify-between gap-6 py-7 text-left"
                 >
-                  <span className="font-sans text-base font-medium text-navy dark:text-white sm:text-lg">
+                  <span className="font-heading text-lg font-bold text-navy dark:text-cream sm:text-xl">
                     {faq.question}
                   </span>
                   <motion.span
                     aria-hidden="true"
                     animate={{ rotate: expanded ? 180 : 0 }}
                     transition={{ duration: reduceMotion ? 0 : 0.2 }}
-                    className="shrink-0 text-forest dark:text-forest-pale"
+                    className="shrink-0 text-gold"
                   >
                     <ChevronDown className="h-5 w-5" />
                   </motion.span>
@@ -79,7 +79,7 @@ export default function FAQ() {
                     transition={{ duration: 0.28, ease: 'easeOut' }}
                     className="overflow-hidden"
                   >
-                    <p className="max-w-3xl pb-6 text-sm leading-relaxed text-navy/65 dark:text-white/65 sm:text-base">
+                    <p className="max-w-3xl pb-8 text-base leading-relaxed text-muted dark:text-cream/65">
                       {faq.answer}
                     </p>
                   </motion.div>
@@ -90,7 +90,7 @@ export default function FAQ() {
         })}
       </ul>
 
-      <p className="mt-8 text-sm text-navy/50 dark:text-white/50">
+      <p className="mt-10 font-body text-sm text-muted dark:text-cream/50">
         Team will never DM you first. Always verify links against official
         sources.
       </p>

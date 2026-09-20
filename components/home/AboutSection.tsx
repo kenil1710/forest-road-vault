@@ -1,6 +1,7 @@
 import { Clock, FileText, Lock, Shield } from 'lucide-react'
-import AnimateIn from './AnimateIn'
-import SectionHeader from './SectionHeader'
+import AnimateIn from '@/components/ui/AnimateIn'
+import GoldArch from '@/components/ui/GoldArch'
+import SectionHeader from '@/components/ui/SectionHeader'
 
 const highlights = [
   {
@@ -31,16 +32,23 @@ const highlights = [
 
 export default function AboutSection() {
   return (
-    <section className="section-y bg-white dark:bg-navy-deep">
-      <div className="container-content">
+    <section className="section-y relative overflow-hidden bg-cream dark:bg-navy-deep">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-20 -top-20 hidden text-gold/10 lg:block"
+      >
+        <GoldArch className="h-[420px] w-[420px] rotate-90" rings={3} />
+      </div>
+
+      <div className="container-content relative">
         <SectionHeader
-          eyebrow="The protocol"
+          tagline="The Protocol"
           title="What is Forest Road Vault?"
           subtitle="A real-world credit protocol on Ethereum L1, built for auditability before convenience."
         />
 
-        <div className="mt-14 grid gap-12 lg:grid-cols-2 lg:gap-16">
-          <AnimateIn className="space-y-5 text-base leading-relaxed text-navy/70 dark:text-white/70">
+        <div className="mt-20 grid gap-16 lg:grid-cols-2">
+          <AnimateIn className="space-y-6 text-base leading-relaxed text-muted dark:text-cream/70">
             <p>
               Forest Road Vault connects on-chain capital to off-chain credit
               markets. Depositors bring USDC and receive USDfr, a fully-backed
@@ -65,18 +73,18 @@ export default function AboutSection() {
             </p>
           </AnimateIn>
 
-          <ul className="space-y-4">
+          <ul className="space-y-5">
             {highlights.map((item, index) => (
               <AnimateIn as="li" key={item.title} delay={index * 0.1}>
-                <article className="card flex gap-4">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-btn bg-forest/10 text-forest dark:bg-forest/20 dark:text-forest-pale">
+                <article className="flex gap-5 border-l-2 border-gold/50 bg-cream-dark/70 p-6 dark:bg-navy-light/40">
+                  <span className="mt-0.5 shrink-0 text-gold-muted dark:text-gold">
                     <item.icon className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <div>
-                    <h3 className="font-sans text-base font-semibold text-navy dark:text-white">
+                    <h3 className="font-body text-base font-semibold text-navy dark:text-cream">
                       {item.title}
                     </h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-navy/65 dark:text-white/65">
+                    <p className="mt-2 text-sm leading-relaxed text-muted dark:text-cream/65">
                       {item.description}
                     </p>
                   </div>

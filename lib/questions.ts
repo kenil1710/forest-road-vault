@@ -80,7 +80,7 @@ export const questions: Question[] = [
     ],
     correctIndex: 1,
     explanation:
-      'Variable-yield pass-through — real interest is passed on, no fixed promised rate.',
+      'Variable-yield pass-through — real interest, no fixed promised rate.',
   },
   {
     question: 'Who conducted the independent external security review?',
@@ -99,7 +99,7 @@ export const questions: Question[] = [
     options: ['5', '10', '15', '20'],
     correctIndex: 2,
     explanation:
-      '15 rounds are published in the audit register, most recent numbered Round 16.',
+      '15 rounds published in the audit register, most recent numbered Round 16.',
   },
   {
     question: 'What happened to bootstrap admin authority after deployment?',
@@ -117,7 +117,7 @@ export const questions: Question[] = [
     question: 'What sectors does the credit book cover?',
     options: [
       'Real estate and agriculture',
-      'Media & entertainment, renewable energy and digital assets',
+      'Media & entertainment, renewable energy, and digital assets',
       'Government bonds only',
       'Cross-border trade finance',
     ],

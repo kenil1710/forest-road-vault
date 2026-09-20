@@ -10,45 +10,52 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        cream: {
+          DEFAULT: '#F5F1EA',
+          dark: '#EDE8DF',
+        },
         navy: {
-          DEFAULT: '#1a2744',
-          deep: '#0f1a2e',
+          DEFAULT: '#1B2A4A',
+          deep: '#0F1A2E',
           light: '#243656',
         },
         forest: {
-          DEFAULT: '#2d6a4f',
-          light: '#40916c',
-          pale: '#b7e4c7',
+          DEFAULT: '#1E3D2F',
+          light: '#2D6A4F',
+          pale: '#B7E4C7',
         },
-        gold: '#d4a843',
-        cream: '#f5f3ee',
+        gold: {
+          DEFAULT: '#C4A44E',
+          light: '#D4B96A',
+          muted: '#B8972F',
+        },
+        ink: '#1B2A4A',
+        muted: '#5A6A80',
+        warmline: '#D6D0C4',
       },
       fontFamily: {
-        display: ['var(--font-display)', 'Georgia', 'serif'],
-        sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-heading)', 'Georgia', 'serif'],
+        body: ['var(--font-body)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       borderRadius: {
-        card: '12px',
-        btn: '8px',
-        input: '8px',
-        badge: '6px',
+        card: '2px',
+        btn: '4px',
+        input: '4px',
       },
       maxWidth: {
         content: '1100px',
       },
-      spacing: {
-        section: '96px',
-        'section-sm': '64px',
+      letterSpacing: {
+        tagline: '0.2em',
       },
       keyframes: {
         'fade-up': {
-          from: { opacity: '0', transform: 'translateY(12px)' },
+          from: { opacity: '0', transform: 'translateY(30px)' },
           to: { opacity: '1', transform: 'translateY(0)' },
         },
       },
-      animation: {
-        'fade-up': 'fade-up 0.5s ease-out both',
-      },
+      animation: { 'fade-up': 'fade-up 0.6s ease-out both' },
     },
   },
   plugins: [],

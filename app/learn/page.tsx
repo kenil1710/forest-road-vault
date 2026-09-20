@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import DeepDive from '@/components/DeepDive'
-import SectionHeader from '@/components/SectionHeader'
+import SectionHeader from '@/components/ui/SectionHeader'
 
 export const metadata: Metadata = {
   title: 'Deep Dive',
@@ -13,7 +13,7 @@ export default function LearnPage() {
     <section className="section-y bg-cream dark:bg-navy-deep">
       <div className="container-content">
         <SectionHeader
-          eyebrow="Learn"
+          tagline="Learn"
           title="Deep Dive"
           subtitle="The architecture, the tokens, the audit record, the credit book, and who holds the keys."
           align="left"

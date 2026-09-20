@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import FAQ from '@/components/FAQ'
-import SectionHeader from '@/components/SectionHeader'
+import SectionHeader from '@/components/ui/SectionHeader'
 
 export const metadata: Metadata = {
   title: 'FAQ',
@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 
 export default function FaqPage() {
   return (
-    <section className="section-y bg-white dark:bg-navy-deep">
+    <section className="section-y bg-cream dark:bg-navy-deep">
       <div className="container-content">
         <SectionHeader
-          eyebrow="Questions"
+          tagline="Questions"
           title="Frequently Asked"
           subtitle="The things people actually ask before they deposit — answered plainly."
           align="left"
