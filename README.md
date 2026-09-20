@@ -5,6 +5,9 @@ protocol on Ethereum L1. Visitors learn how the protocol works, read the FAQ,
 take a 15-question quiz, earn a tree-level certificate based on their score,
 and download or share it on X.
 
+**Live:** https://forest-road-vault-cyan.vercel.app
+**Source:** https://github.com/kenil1710/forest-road-vault
+
 > This page is an educational community contribution. It is not affiliated with
 > Forest Road Asset Management. It does not constitute investment advice or an
 > offer of securities.
@@ -199,8 +202,19 @@ npx vercel          # preview
 npx vercel --prod   # production
 ```
 
-Set `NEXT_PUBLIC_SITE_URL` in the project's environment variables once a custom
-domain is attached, then redeploy so the share card points at the right host.
+`NEXT_PUBLIC_SITE_URL` is already set on the Production environment to
+`https://forest-road-vault-cyan.vercel.app`. Update it and redeploy whenever the
+public hostname changes (for example once a custom domain is attached),
+otherwise share cards will point at the old host.
+
+Note the per-deployment URLs (`*-kenils-projects-*.vercel.app`) sit behind
+Vercel Authentication and redirect to a login page. That is why the site URL is
+pinned to the public production alias rather than left to Vercel's
+`NEXT_PUBLIC_VERCEL_URL`, which resolves to the protected deployment host and
+would make Open Graph images unreachable to crawlers.
+
+Pushes to `main` auto-deploy — the GitHub repo is connected to the Vercel
+project.
 
 ### Anywhere else
 
