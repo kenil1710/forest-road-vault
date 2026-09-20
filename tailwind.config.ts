@@ -34,6 +34,9 @@ const config: Config = {
         warmline: '#D6D0C4',
       },
       fontFamily: {
+        // Heavy geometric sans for the biggest headlines, as the brand's
+        // posts set them; Playfair stays for sub-headings.
+        display: ['var(--font-display)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         heading: ['var(--font-heading)', 'Georgia', 'serif'],
         body: ['var(--font-body)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],

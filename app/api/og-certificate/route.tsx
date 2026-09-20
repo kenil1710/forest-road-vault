@@ -9,10 +9,28 @@ export const runtime = 'edge'
 const WIDTH = 1200
 const HEIGHT = 675
 
-/** Satori has no <path> support, so the emblem goes in as an inline SVG image. */
-const treeDataUri = `data:image/svg+xml;utf8,${encodeURIComponent(
+/**
+ * Fallback emblem. Satori has no <path> support, so the traced mark goes in as
+ * an inline SVG image if the official bitmap cannot be read.
+ */
+const treeFallbackUri = `data:image/svg+xml;utf8,${encodeURIComponent(
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${TREE_VIEWBOX}"><path fill="${brand.navy}" fill-rule="evenodd" d="${TREE_PATH}"/></svg>`
 )}`
+
+/** The official logo, bundled beside the route so there is no network hop. */
+async function loadLogoDataUri(): Promise<string> {
+  try {
+    const bytes = await fetch(new URL('./logo-navy.png', import.meta.url)).then(
+      (r) => r.arrayBuffer()
+    )
+    let binary = ''
+    const view = new Uint8Array(bytes)
+    for (let i = 0; i < view.length; i++) binary += String.fromCharCode(view[i])
+    return `data:image/png;base64,${btoa(binary)}`
+  } catch {
+    return treeFallbackUri
+  }
+}
 
 function GoldRule({ width, marginTop }: { width: number; marginTop: number }) {
   return (
@@ -45,7 +63,7 @@ export async function GET(request: NextRequest) {
     treeLevels.find((l) => score >= l.min && score <= l.max) ??
     treeLevels[0]
 
-  const [playfair, dmSans, dmSansMedium] = await Promise.all([
+  const [playfair, dmSans, dmSansMedium, treeDataUri] = await Promise.all([
     fetch(new URL('./fonts/PlayfairDisplay-Bold.ttf', import.meta.url)).then((r) =>
       r.arrayBuffer()
     ),
@@ -55,6 +73,7 @@ export async function GET(request: NextRequest) {
     fetch(new URL('./fonts/DMSans-Medium.ttf', import.meta.url)).then((r) =>
       r.arrayBuffer()
     ),
+    loadLogoDataUri(),
   ])
 
   const nameSize = name.length > 26 ? 30 : name.length > 18 ? 36 : 40

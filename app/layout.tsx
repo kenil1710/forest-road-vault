@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from 'next'
-import { DM_Sans, JetBrains_Mono, Playfair_Display } from 'next/font/google'
+import {
+  DM_Sans,
+  JetBrains_Mono,
+  Montserrat,
+  Playfair_Display,
+} from 'next/font/google'
 import type { ReactNode } from 'react'
 import Footer from '@/components/layout/Footer'
 import Navbar from '@/components/layout/Navbar'
@@ -7,6 +12,13 @@ import PageTransition from '@/components/PageTransition'
 import ThemeProvider from '@/components/ThemeProvider'
 import { siteMeta, siteUrl } from '@/lib/constants'
 import './globals.css'
+
+const display = Montserrat({
+  subsets: ['latin'],
+  weight: ['700', '800', '900'],
+  variable: '--font-display',
+  display: 'swap',
+})
 
 const heading = Playfair_Display({
   subsets: ['latin'],
@@ -43,7 +55,7 @@ export const metadata: Metadata = {
     url: siteUrl,
     images: [
       {
-        url: '/images/og-default.png',
+        url: '/images/og-default.jpg',
         width: 1500,
         height: 500,
         alt: 'Forest Road Vault — real-world credit on Ethereum L1',
@@ -55,7 +67,7 @@ export const metadata: Metadata = {
     site: siteMeta.handle,
     title: siteMeta.title,
     description: siteMeta.ogDescription,
-    images: ['/images/og-default.png'],
+    images: ['/images/og-default.jpg'],
   },
 }
 
@@ -69,7 +81,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${heading.variable} ${body.variable} ${mono.variable}`}
+      className={`${display.variable} ${heading.variable} ${body.variable} ${mono.variable}`}
     >
       <body className="flex min-h-screen flex-col">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>

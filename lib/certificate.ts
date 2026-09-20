@@ -5,6 +5,9 @@ import { TREE_PATH, TREE_SIZE } from './tree'
 export const CERT_WIDTH = 1200
 export const CERT_HEIGHT = 675
 
+/** Path to the official mark, drawn onto the certificate when it has loaded. */
+export const CERT_LOGO_SRC = '/images/logo-navy.png'
+
 export type CertificateData = {
   name: string
   score: number
@@ -47,13 +50,23 @@ function drawTracked(
   ctx.textAlign = previousAlign
 }
 
+/**
+ * Prefers the official logo bitmap; falls back to the traced path so the
+ * certificate still renders correctly before the image has loaded (or if it
+ * fails to).
+ */
 function drawTree(
   ctx: CanvasRenderingContext2D,
   centerX: number,
   top: number,
   size: number,
-  color: string
+  color: string,
+  logo?: CanvasImageSource | null
 ) {
+  if (logo) {
+    ctx.drawImage(logo, centerX - size / 2, top, size, size)
+    return
+  }
   const scale = size / TREE_SIZE
   ctx.save()
   ctx.translate(centerX - size / 2, top)
@@ -143,7 +156,8 @@ function fitFontSize(
 
 export function drawCertificate(
   canvas: HTMLCanvasElement,
-  data: CertificateData
+  data: CertificateData,
+  logo?: CanvasImageSource | null
 ) {
   const ctx = canvas.getContext('2d')
   if (!ctx) return
@@ -170,7 +184,7 @@ export function drawCertificate(
   ctx.textAlign = 'center'
   ctx.textBaseline = 'alphabetic'
 
-  drawTree(ctx, centerX, 62, 88, brand.navy)
+  drawTree(ctx, centerX, 62, 88, brand.navy, logo)
 
   ctx.fillStyle = brand.navy
   ctx.font = `500 12px ${body}`

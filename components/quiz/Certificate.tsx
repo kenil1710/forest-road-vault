@@ -1,7 +1,19 @@
 'use client'
 
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react'
-import { CERT_HEIGHT, CERT_WIDTH, drawCertificate } from '@/lib/certificate'
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react'
+import {
+  CERT_HEIGHT,
+  CERT_LOGO_SRC,
+  CERT_WIDTH,
+  drawCertificate,
+} from '@/lib/certificate'
 import type { TreeLevel } from '@/lib/constants'
 
 type CertificateProps = {
@@ -18,19 +30,33 @@ export type CertificateHandle = {
 const Certificate = forwardRef<CertificateHandle, CertificateProps>(
   function Certificate({ name, score, total, level }, ref) {
     const canvasRef = useRef<HTMLCanvasElement>(null)
+    const [logo, setLogo] = useState<HTMLImageElement | null>(null)
     useImperativeHandle(ref, () => ({ getCanvas: () => canvasRef.current }), [])
+
+    // Load the official mark once; the certificate falls back to the traced
+    // path until it arrives, so nothing blocks on the network.
+    useEffect(() => {
+      const image = new window.Image()
+      image.decoding = 'async'
+      image.onload = () => setLogo(image)
+      image.src = CERT_LOGO_SRC
+    }, [])
 
     const render = useCallback(() => {
       const canvas = canvasRef.current
       if (!canvas) return
-      drawCertificate(canvas, {
-        name,
-        score,
-        total,
-        levelName: level.name,
-        levelCitation: level.citation,
-      })
-    }, [name, score, total, level])
+      drawCertificate(
+        canvas,
+        {
+          name,
+          score,
+          total,
+          levelName: level.name,
+          levelCitation: level.citation,
+        },
+        logo
+      )
+    }, [name, score, total, level, logo])
 
     useEffect(() => {
       render()

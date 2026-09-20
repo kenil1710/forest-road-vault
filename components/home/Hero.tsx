@@ -15,19 +15,15 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden bg-cream dark:bg-navy-deep">
+      {/* Bottom-right arch window, mirrored to sit in the corner as the
+          brand's posts place it. */}
       <motion.div
         aria-hidden="true"
         style={reduceMotion ? undefined : { y: archY }}
-        className="pointer-events-none absolute -right-16 -top-16 hidden text-gold/25 sm:block"
+        className="pointer-events-none absolute -bottom-10 -right-10 hidden text-gold/45 sm:block"
       >
-        <GoldArch className="h-[520px] w-[520px] rotate-90" rings={4} />
+        <GoldArch className="h-[300px] w-[300px] -scale-x-100" leaves={4} />
       </motion.div>
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-24 -left-24 hidden text-gold/15 lg:block"
-      >
-        <GoldArch className="h-[360px] w-[360px] -rotate-90" rings={3} />
-      </div>
 
       <div className="hero-height container-content relative flex items-center py-20">
         <div className="grid w-full items-center gap-16 lg:grid-cols-[3fr_2fr]">
@@ -37,9 +33,10 @@ export default function Hero() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="tagline">{siteMeta.tagline}</p>
-            <h1 className="mt-6 font-heading text-[2.75rem] font-bold leading-[1.05] text-navy dark:text-cream sm:text-6xl lg:text-[4.25rem]">
+            <h1 className="mt-6 font-display text-[2.6rem] font-black uppercase leading-[0.98] tracking-[-0.01em] text-navy dark:text-cream sm:text-6xl lg:text-[4.5rem]">
               Built on Real Credit.
             </h1>
+            <GoldDivider width="short" align="left" className="mt-8" />
             <p className="mt-8 max-w-xl text-base leading-relaxed text-muted dark:text-cream/65 sm:text-lg">
               Forest Road Vault bridges on-chain capital with off-chain credit
               markets — without an AMM, a price feed, or an external DeFi

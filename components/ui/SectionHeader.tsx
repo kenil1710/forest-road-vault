@@ -25,7 +25,7 @@ export default function SectionHeader({
         <p className={isDark ? 'tagline-on-dark' : 'tagline'}>{tagline}</p>
       ) : null}
       <h2
-        className={`mt-4 text-[2rem] font-bold leading-[1.15] sm:text-4xl lg:text-[2.75rem] ${
+        className={`mt-4 font-display text-[1.9rem] font-extrabold uppercase leading-[1.05] tracking-[-0.01em] sm:text-4xl lg:text-[2.6rem] ${
           isDark ? 'text-cream' : 'text-navy dark:text-cream'
         }`}
       >
@@ -33,7 +33,8 @@ export default function SectionHeader({
       </h2>
       <GoldDivider
         width="short"
-        className={`mt-6 ${align === 'center' ? '' : 'mx-0'}`}
+        align={align === 'center' ? 'center' : 'left'}
+        className="mt-7"
       />
       {subtitle ? (
         <p

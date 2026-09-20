@@ -35,9 +35,9 @@ export default function AboutSection() {
     <section className="section-y relative overflow-hidden bg-cream dark:bg-navy-deep">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-20 -top-20 hidden text-gold/10 lg:block"
+        className="pointer-events-none absolute -bottom-12 -left-12 hidden text-gold/30 lg:block"
       >
-        <GoldArch className="h-[420px] w-[420px] rotate-90" rings={3} />
+        <GoldArch className="h-[260px] w-[260px]" leaves={3} />
       </div>
 
       <div className="container-content relative">
