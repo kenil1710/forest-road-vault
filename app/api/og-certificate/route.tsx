@@ -7,7 +7,8 @@ import { TREE_PATH, TREE_VIEWBOX } from '@/lib/tree'
 export const runtime = 'edge'
 
 const WIDTH = 1200
-const HEIGHT = 675
+// 1.91:1 — the ratio X expects for summary_large_image.
+const HEIGHT = 630
 
 /**
  * Fallback emblem. Satori has no <path> support, so the traced mark goes in as
@@ -138,15 +139,15 @@ export async function GET(request: NextRequest) {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            marginTop: 56,
+            marginTop: 40,
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={treeDataUri} width={88} height={88} alt="" />
+          <img src={treeDataUri} width={80} height={80} alt="" />
 
           <div
             style={{
-              marginTop: 24,
+              marginTop: 20,
               fontSize: 12,
               letterSpacing: 6,
               color: brand.navy,
@@ -158,7 +159,7 @@ export async function GET(request: NextRequest) {
 
           <div
             style={{
-              marginTop: 18,
+              marginTop: 14,
               fontSize: 18,
               fontFamily: 'Playfair Display',
               color: brand.navy,
@@ -167,11 +168,11 @@ export async function GET(request: NextRequest) {
             Certificate of Knowledge
           </div>
 
-          <GoldRule width={200} marginTop={22} />
+          <GoldRule width={200} marginTop={18} />
 
           <div
             style={{
-              marginTop: 34,
+              marginTop: 26,
               fontSize: nameSize,
               fontFamily: 'Playfair Display',
               color: brand.navy,
@@ -182,11 +183,11 @@ export async function GET(request: NextRequest) {
             {name}
           </div>
 
-          <GoldRule width={200} marginTop={28} />
+          <GoldRule width={200} marginTop={22} />
 
           <div
             style={{
-              marginTop: 30,
+              marginTop: 24,
               fontSize: 24,
               fontWeight: 500,
               letterSpacing: 2,
@@ -196,13 +197,13 @@ export async function GET(request: NextRequest) {
             {level.name}
           </div>
 
-          <div style={{ marginTop: 18, fontSize: 16, color: brand.muted }}>
+          <div style={{ marginTop: 14, fontSize: 16, color: brand.muted }}>
             {`Score: ${score} / ${questions.length}`}
           </div>
 
           <div
             style={{
-              marginTop: 24,
+              marginTop: 18,
               fontSize: 14,
               color: brand.muted,
               textAlign: 'center',
@@ -216,7 +217,7 @@ export async function GET(request: NextRequest) {
         <div
           style={{
             position: 'absolute',
-            bottom: 52,
+            bottom: 40,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',

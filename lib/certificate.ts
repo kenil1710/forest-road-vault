@@ -1,9 +1,12 @@
 import { brand } from './constants'
 import { TREE_PATH, TREE_SIZE } from './tree'
 
-/** 1200x675 is 16:9 — the ratio X uses for summary_large_image cards. */
+/**
+ * 1200x630 is the 1.91:1 ratio X and Open Graph expect for
+ * summary_large_image. A taller card gets centre-cropped by X.
+ */
 export const CERT_WIDTH = 1200
-export const CERT_HEIGHT = 675
+export const CERT_HEIGHT = 630
 
 /** Path to the official mark, drawn onto the certificate when it has loaded. */
 export const CERT_LOGO_SRC = '/images/logo-navy.png'
@@ -184,38 +187,38 @@ export function drawCertificate(
   ctx.textAlign = 'center'
   ctx.textBaseline = 'alphabetic'
 
-  drawTree(ctx, centerX, 62, 88, brand.navy, logo)
+  drawTree(ctx, centerX, 52, 80, brand.navy, logo)
 
   ctx.fillStyle = brand.navy
   ctx.font = `500 12px ${body}`
-  drawTracked(ctx, 'FOREST ROAD VAULT', centerX, 192, 6)
+  drawTracked(ctx, 'FOREST ROAD VAULT', centerX, 172, 6)
 
   ctx.fillStyle = brand.navy
   ctx.font = `700 18px ${heading}`
-  drawTracked(ctx, 'Certificate of Knowledge', centerX, 230, 1)
+  drawTracked(ctx, 'Certificate of Knowledge', centerX, 208, 1)
 
-  drawGoldRule(ctx, centerX, 258, 200)
+  drawGoldRule(ctx, centerX, 234, 200)
 
   const nameSize = fitFontSize(ctx, name, heading, 40, 20, CERT_WIDTH - 240)
   ctx.font = `700 ${nameSize}px ${heading}`
   ctx.fillStyle = brand.navy
-  ctx.fillText(name, centerX, 328)
+  ctx.fillText(name, centerX, 296)
 
-  drawGoldRule(ctx, centerX, 364, 200)
+  drawGoldRule(ctx, centerX, 330, 200)
 
   ctx.fillStyle = brand.gold
   ctx.font = `700 24px ${body}`
-  drawTracked(ctx, data.levelName, centerX, 412, 2)
+  drawTracked(ctx, data.levelName, centerX, 376, 2)
 
   ctx.fillStyle = brand.muted
   ctx.font = `400 16px ${body}`
-  ctx.fillText(`Score: ${data.score} / ${data.total}`, centerX, 448)
+  ctx.fillText(`Score: ${data.score} / ${data.total}`, centerX, 410)
 
   ctx.fillStyle = brand.muted
   ctx.font = `400 14px ${body}`
   const citation = `${name} ${data.levelCitation}.`
   wrapText(ctx, citation, CERT_WIDTH - 320, 2).forEach((line, i) => {
-    ctx.fillText(line, centerX, 492 + i * 22)
+    ctx.fillText(line, centerX, 452 + i * 22)
   })
 
   ctx.fillStyle = brand.muted
@@ -224,11 +227,11 @@ export function drawCertificate(
     ctx,
     'forestroadvault.com  •  @forestroadvault  •  Built on Ethereum',
     centerX,
-    600,
+    556,
     1.5
   )
 
   ctx.fillStyle = brand.gold
   ctx.font = `500 10px ${body}`
-  drawTracked(ctx, 'CAPITAL MOVES FURTHER.', centerX, 632, 4)
+  drawTracked(ctx, 'CAPITAL MOVES FURTHER.', centerX, 588, 4)
 }

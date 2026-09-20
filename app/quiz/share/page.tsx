@@ -62,14 +62,22 @@ export async function generateMetadata({
       title,
       description,
       siteName: siteMeta.siteName,
-      images: [{ url: image, width: 1200, height: 675, alt: title }],
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: title,
+          type: 'image/png',
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       site: siteMeta.handle,
       title,
       description,
-      images: [image],
+      images: [{ url: image, alt: title }],
     },
   }
 }
@@ -103,7 +111,7 @@ export default function SharePage({
             src={image}
             alt={`Certificate of Knowledge for ${who} — ${level.name}, scored ${score} of ${questions.length}`}
             width={1200}
-            height={675}
+            height={630}
             className="h-auto w-full"
             unoptimized
             priority

@@ -14,6 +14,9 @@ type ShareButtonProps = {
   onRetake: () => void
 }
 
+/** Bump when the card artwork changes, to bypass X's card cache. */
+const SHARE_CARD_VERSION = 2
+
 function slugify(value: string): string {
   return (
     value
@@ -48,9 +51,15 @@ export default function ShareButton({
   // Only ever true on mobile, where an image file is being prepared.
   const [preparing, setPreparing] = useState(false)
 
+  /**
+   * X caches card data per URL for about a week, including failed fetches.
+   * Early deploys advertised an og:image on a deployment host that sits
+   * behind Vercel Authentication, so X cached a broken card for those URLs.
+   * Bumping this makes the share URL new to X, forcing a fresh crawl.
+   */
   const shareUrl = `${siteUrl}/quiz/share?name=${encodeURIComponent(
     name.trim()
-  )}&score=${score}&level=${level.slug}`
+  )}&score=${score}&level=${level.slug}&v=${SHARE_CARD_VERSION}`
 
   const message = `🌳 I scored ${score}/${total} on the Forest Road Vault Knowledge Quiz and earned the "${level.name}" certificate!\n\nTest your knowledge about this real-world credit protocol on Ethereum L1.\n\n${siteMeta.handle} #ForestRoadVault #DeFi #RWA`
 
